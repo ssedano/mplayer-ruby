@@ -18,7 +18,7 @@ module MPlayer
     # :duration sets the length to display text.
     # :level sets the osd level to display at. (default: 0 => always show)
     def osd_show_text(string,options = {})
-      options.reverse_merge!({:duration => 0, :level => 0})
+      options = {:duration => 0, :level => 0}.merge(options)
       command("osd_show_text #{string} #{options[:duration]} #{options[:level]}")
     end
 
@@ -27,7 +27,7 @@ module MPlayer
     # :duration sets the length to display text.
     # :level sets the osd level to display at. (default: 0 => always show)
     def osd_show_property_text(string,options={})
-      options.reverse_merge!({:duration => 0, :level => 0})
+      options = {:duration => 0, :level => 0}.merge(options)
       command("osd_show_property_text #{string} #{options[:duration]} #{options[:level]}")
     end
 
