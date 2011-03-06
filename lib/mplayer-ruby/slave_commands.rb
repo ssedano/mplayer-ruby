@@ -127,7 +127,9 @@ module MPlayer
     # :append loads the file and appends it to the current playlist
     # :no_append will stop playback and play new loaded file
     def load_file(file,append = :no_append)
-      raise ArgumentError,"Invalid File" unless File.exists? file
+      unless File.exists?(file) || !!(file =~ URI::regexp)
+        raise ArgumentError,"Invalid File"
+      end
       switch = (append == :append ? 1 : 0)
       command "loadfile #{file} #{switch}"
     end
@@ -136,7 +138,9 @@ module MPlayer
     # :append loads the playlist and appends it to the current playlist
     # :no_append will stop playback and play new loaded playlist
     def load_list(file,append = :no_append)
-      raise ArgumentError,"Invalid File" unless File.exists? file
+      unless File.exists?(file) || !!(file =~ URI::regexp)
+        raise ArgumentError,"Invalid File"
+      end
       switch = (append == :append ? 1 : 0)
       command "loadlist #{file} #{switch}"
     end

@@ -220,39 +220,53 @@ context "MPlayer::SlaveCommands" do
   context "load_file" do
 
     asserts("invalid file") { @player.load_file 'booger' }.raises ArgumentError,"Invalid File"
-    context "append" do
-      setup { mock_command @player, "loadfile test/test.mp3 1" }
-      asserts("load_file test/test.mp3, :append") { @player.load_file 'test/test.mp3', :append }
-    end
+    [
+      ["url", "http://www.example.com/test.mp3"],
+      ["file", "test/test.mp3"]
+    ].each do |kind, location|
+      context kind do
+        context "append" do
+          setup { mock_command @player, "loadfile #{location} 1" }
+          asserts("load_file #{location}, :append") { @player.load_file location, :append }
+        end
 
-    context "no append" do
-      setup { mock_command @player, "loadfile test/test.mp3 0" }
-      asserts("load_file test/test.mp3") { @player.load_file 'test/test.mp3' }
-    end
+        context "no append" do
+          setup { mock_command @player, "loadfile #{location} 0" }
+          asserts("load_file #{location}") { @player.load_file location }
+        end
 
-    context "explicit no append" do
-      setup { mock_command @player, "loadfile test/test.mp3 0" }
-      asserts("load_file test/test.mp3, :no_append") { @player.load_file 'test/test.mp3', :no_append }
+        context "explicit no append" do
+          setup { mock_command @player, "loadfile #{location} 0" }
+          asserts("load_file #{location}, :no_append") { @player.load_file location, :no_append }
+        end
+      end
     end
   end
 
   context "load_list" do
 
     asserts("invalid playlist") { @player.load_list 'booger' }.raises ArgumentError,"Invalid File"
-    context "append" do
-      setup { mock_command @player, "loadlist test/test.mp3 1" }
-      asserts("load_list test/test.mp3, :append") { @player.load_list 'test/test.mp3', :append }
-    end
+    [
+      ["url", "http://www.example.com/test.mp3"],
+      ["file", "test/test.mp3"]
+    ].each do |kind, location|
+      context kind do
+        context "append" do
+          setup { mock_command @player, "loadlist #{location} 1" }
+          asserts("load_list #{location}, :append") { @player.load_list location, :append }
+        end
 
-    context "no append" do
-      setup { mock_command @player, "loadlist test/test.mp3 0" }
-      asserts("load_list test/test.mp3") { @player.load_list 'test/test.mp3' }
-      # asserts("load_list test/test.mp3, :no_append") { @player.load_list 'test/test.mp3', :no_append }
-    end
+        context "no append" do
+          setup { mock_command @player, "loadlist #{location} 0" }
+          asserts("load_list #{location}") { @player.load_list location }
+          #asserts("load_list #{location}, :no_append") { @player.load_list location, :no_append }
+        end
 
-    context "explicit no append" do
-      setup { mock_command @player, "loadlist test/test.mp3 0" }
-      asserts("load_list test/test.mp3, :no_append") { @player.load_list 'test/test.mp3', :no_append }
+        context "explicit no append" do
+          setup { mock_command @player, "loadlist #{location} 0" }
+          asserts("load_list #{location}, :no_append") { @player.load_list location, :no_append }
+        end
+      end
     end
   end
 

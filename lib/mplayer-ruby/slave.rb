@@ -6,13 +6,15 @@ module MPlayer
     include MPlayer::SlaveVideoCommands
     include MPlayer::SlaveTvCommands
     include MPlayer::SlaveSubCommands
-
+    require 'uri'
 
     # Initializes a new instance of MPlayer.
     # set :path to point to the location of mplayer
     # defaults to '/usr/bin/mplayer'
     def initialize(file = "",options ={})
-      raise ArgumentError,"Invalid File" unless File.exists?(file)
+      unless File.exists?(file) || !!(file =~ URI::regexp)
+        raise ArgumentError,"Invalid File"
+      end
       options[:path] ||= '/usr/bin/mplayer'
       @file = file
 
