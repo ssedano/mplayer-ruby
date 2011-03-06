@@ -19,7 +19,7 @@ class Riot::Situation
     return mock(player).command(input) { output } unless match
     mock(player).command(input,match) { output }
   end
-  
+
   # mocks Open4
   def mock_player
     mock(Open4).popen4("/usr/bin/mplayer -slave -quiet test/test.mp3") { [true,true,true,true] }
@@ -37,5 +37,5 @@ class Riot::Context
   def setup_player
     setup { @player = mock_player }
   end
-  
+
 end

@@ -2,12 +2,12 @@ require File.expand_path("teststrap", File.dirname(__FILE__))
 
 context "MPlayer::SlaveTvCommands" do
   setup_player
-  
+
   context "tv_start_scan" do
     setup { mock_stdin @player, "tv_start_scan" ; @player}
     asserts("tv_start_scan") { @player.tv_start_scan }
   end
-  
+
   context "tv_step_channel" do
     context "next" do
       setup { mock_stdin @player, "tv_step_channel 1" }
@@ -18,42 +18,42 @@ context "MPlayer::SlaveTvCommands" do
       asserts("tv_step_channel :prev") { @player.tv_step_channel :prev }
     end
   end
-  
+
   context "next_channel" do
     setup { mock(@player).tv_step_channel(:next) { true } }
     asserts("next_channel") { @player.next_channel }
   end
-  
+
   context "prev_channel" do
     setup { mock(@player).tv_step_channel(:prev) { true } }
     asserts("prev_channel") { @player.prev_channel }
   end
-  
+
   context "tv_step_norm" do
     setup { mock_stdin @player, "tv_step_norm" }
     asserts("tv_step_norm") { @player.tv_step_norm }
   end
-  
+
   context "tv_step_chanlist" do
     setup { mock_stdin @player, "tv_step_chanlist" }
     asserts("tv_step_chanlist") { @player.tv_step_chanlist }
   end
-  
+
   context "tv_set_channel" do
     setup { mock_stdin @player, "tv_set_channel 1" }
     asserts("tv_set_channel 1") { @player.tv_set_channel 1 }
   end
-  
+
   context "set_channel" do
     setup { mock_stdin @player, "tv_set_channel 1" }
     asserts("set_channel 1") { @player.set_channel 1 }
   end
-  
+
   context "tv_last_channel" do
     setup { mock_stdin @player, "tv_last_channel" }
     asserts("tv_last_channel") { @player.tv_last_channel }
   end
-  
+
   context "last_channel" do
     setup { mock_stdin @player, "tv_last_channel" }
     asserts("last_channel") { @player.last_channel }
@@ -63,17 +63,17 @@ context "MPlayer::SlaveTvCommands" do
     setup { mock_stdin @player, "tv_set_freq 1.92" }
     asserts("tv_set_freq 1.92") { @player.tv_set_freq 1.92 }
   end
-  
+
   context "tv_step_freq" do
     setup { mock_stdin @player, "tv_step_freq 2.3" }
     asserts("tv_step_freq 2.3") { @player.tv_step_freq 2.3 }
   end
-  
+
   context "tv_set_norm" do
     setup { mock_stdin @player, "tv_set_norm NTSC" }
     asserts(":ntsc") {  @player.tv_set_norm :ntsc }
   end
-  
+
   context "tv_set_norm ntsc" do
     setup { mock_stdin @player, "tv_set_norm NTSC" }
     asserts("ntsc") { @player.tv_set_norm 'ntsc' }
@@ -105,5 +105,5 @@ context "MPlayer::SlaveTvCommands" do
       asserts("value out of range [-100,100]") { @player.method(setting).call(1000) }.raises(ArgumentError,"Value out of Range -100..100")
     end
   end
-    
+
 end

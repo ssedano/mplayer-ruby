@@ -2,7 +2,7 @@ require File.expand_path("teststrap", File.dirname(__FILE__))
 
 context "MPlayer::SlaveSubCommands" do
   setup_player
-  
+
   context "sub_delay" do
 
     context "absolute" do
@@ -43,7 +43,7 @@ context "MPlayer::SlaveSubCommands" do
       asserts("sub_step 5,:backward") { @player.sub_step 5,:prev }
     end
   end
-  
+
   context "sub_pos" do
     context "by relative" do
       setup { mock_stdin @player, "sub_pos 5 0"  }
@@ -222,7 +222,7 @@ context "MPlayer::SlaveSubCommands" do
       asserts("sub_scale 5,:absolute") {  @player.sub_scale 5,:absolute }
     end
   end
-  
+
   context "forced_subs_only" do
     context "toggle" do
       setup { mock_stdin @player, "forced_subs_only" }
@@ -239,5 +239,5 @@ context "MPlayer::SlaveSubCommands" do
       asserts("forced_subs_only :off") { @player.forced_subs_only :off }
     end
   end
-  
+
 end

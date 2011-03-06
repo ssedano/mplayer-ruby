@@ -226,7 +226,7 @@ context "MPlayer::SlaveVideoCommands" do
     context "take screenshot" do
       setup do
         mock_stdin @player, "screenshot 0"
-        mock_stdout @player, "", "*** screenshot 'shot0001.png' ***" 
+        mock_stdout @player, "", "*** screenshot 'shot0001.png' ***"
       end
       asserts("screenshot") { @player.screenshot == 'shot0001.png' }
     end
@@ -306,7 +306,7 @@ context "MPlayer::SlaveVideoCommands" do
     setup { mock_command @player, "set_property volume 40" }
     asserts("set_property :volume, 40") { @player.set_property :volume, 40 }
   end
-  
+
   context "step_property" do
     context ":up" do
       setup { mock_command @player, "step_property volume 10 1"}
@@ -316,9 +316,9 @@ context "MPlayer::SlaveVideoCommands" do
       setup { mock_command @player, "step_property volume 10 -1"}
       asserts("step_property :volume, -10") { @player.step_property :volume, -10}
     end
-    
+
   end
-  
+
   context "get_vofullscreen" do
     context "fullscreen" do
       setup { mock_command @player, "get_vofullscreen","1",/(0|1)/ }
@@ -330,7 +330,7 @@ context "MPlayer::SlaveVideoCommands" do
     end
 
   end
-  
+
   context "get_sub_visibility" do
     context "on" do
       setup { mock_command @player, "get_sub_visibility","1",/(0|1)/ }
@@ -366,7 +366,7 @@ context "MPlayer::SlaveVideoCommands" do
         setup { mock_command @player, "change_rectangle 2 2" }
         asserts("change_rectangle :x, 2") { @player.change_rectangle :x, 2 }
       end
-      
+
       context "explicit relative x" do
         setup { mock_command @player, "change_rectangle 2 2" }
         asserts("change_rectangle :x, 2, :relative") { @player.change_rectangle :x, 2, :relative }
@@ -387,13 +387,13 @@ context "MPlayer::SlaveVideoCommands" do
         setup { mock_command @player, "change_rectangle 0 2" }
         asserts("change_rectangle :x, 2, :absolute") { @player.change_rectangle :x, 2, :absolute }
       end
-      
+
       context "y" do
         setup { mock_command @player, "change_rectangle 1 2" }
         asserts("change_rectangle :y, 2, :absolute") { @player.change_rectangle :y, 2, :absolute }
       end
     end
   end
-  
-  
+
+
 end

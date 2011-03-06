@@ -1,11 +1,11 @@
 module MPlayer
   module SlaveTvCommands
-    
+
     # Start automatic TV channel scanning
     def tv_start_scan
       command("tv_start_scan")
     end
-    
+
     # Select the next/previous TV Channel
     # :next selects next channel
     # :prev select previous channel
@@ -13,54 +13,54 @@ module MPlayer
       value = action ==  :prev ? -1 : 1
       command "tv_step_channel #{value}"
     end
-    
+
     # next TV channel
     def next_channel
       tv_step_channel :next
     end
-    
+
     #previous TV channel
     def prev_channel
       tv_step_channel :prev
     end
-    
+
     # Change TV norm
     def tv_step_norm
       command("tv_step_norm")
     end
-    
+
     # Change TV Channel list
     def tv_step_chanlist
       command("tv_step_chanlist")
     end
-    
+
     # Set TV Channel to <value>
     def tv_set_channel(value)
       command("tv_set_channel #{value}")
     end
     alias :set_channel :tv_set_channel
-    
+
     # Set the current TV Channel to the last channel
     def tv_last_channel
       command("tv_last_channel")
     end
     alias :last_channel :tv_last_channel
-    
+
     # set TV Frequency in MHz
     def tv_set_freq(value)
       command("tv_set_freq #{value}")
     end
-    
+
     # set the TV frequency relative to the current frequency
     def tv_step_freq(value)
       command("tv_step_freq #{value}")
     end
-    
+
     # Set the TV tuner norm (PAL, SECAM, NTSC, ... ).
     def tv_set_norm(value)
       command("tv_set_norm #{value.to_s.upcase}")
     end
-    
+
     # Set/adjust video parameters.
     # If :relative, modifies parameter by <value>.
     # If :absolute, parameter is set to <value>.
@@ -92,8 +92,8 @@ module MPlayer
     def tv_set_saturation(value, type = :relative)
       setting :tv_set_saturation, value, type
     end
-    
 
-    
+
+
   end
 end

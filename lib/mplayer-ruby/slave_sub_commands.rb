@@ -1,6 +1,6 @@
 module MPlayer
   module SlaveSubCommands
-    
+
     # Adjust the subtitle delay
     # :relative is adjust by +/- <value> seconds.
     # :absolute is set it to <value>. (default)
@@ -116,6 +116,6 @@ module MPlayer
     def forced_subs_only(value = nil)
       toggle :forced_subs_only, value
     end
-    
+
   end
 end
