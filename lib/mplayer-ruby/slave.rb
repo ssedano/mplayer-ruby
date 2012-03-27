@@ -12,18 +12,20 @@ module MPlayer
     # set :path to point to the location of mplayer
     # defaults to '/usr/bin/mplayer'
     def initialize(file = "",options ={})
-      unless File.exists?(file) || !!(file =~ URI::regexp)
-        raise ArgumentError,"Invalid File"
-      end
       options[:path] ||= '/usr/bin/mplayer'
       @file = file
 
       mplayer_options = "-slave -quiet"
       mplayer_options += " -vf screenshot" if options[:screenshot]
-
+      mplayer_options += " -idle -noconsolecontrols" if options[:singleton]
+      mplayer_options += " -vo #{options[:vo]}" if options[:vo]
+      mplayer_options += " -prefer-ipv#{options[:preferred_ip]}" if options[:preferred_ip]
+      mplayer_options += " -cache #{options[:cache]}" if options[:cache]
       mplayer = "#{options[:path]} #{mplayer_options} #{@file}"
+      
       @pid,@stdin,@stdout,@stderr = Open4.popen4(mplayer)
-      until @stdout.gets.inspect =~ /playback/ do
+      
+      until @stdout.gets.inspect =~ /MPlayer/ do #/playback/ do
       end #fast forward past mplayer's initial output
     end
 
