@@ -11,6 +11,10 @@ module MPlayer
     # Initializes a new instance of MPlayer.
     # set :path to point to the location of mplayer
     # defaults to '/usr/bin/mplayer'
+    # singleton makes the mplayer idles and ignore console data.
+    # :vo lets the user choose which video output driver must mplayer load. 'null' for no video at al.
+    # :preferred_id can take 4 or 6.
+    # :cache for the video
     def initialize(file = "",options ={})
       options[:path] ||= '/usr/bin/mplayer'
       @file = file
@@ -21,8 +25,7 @@ module MPlayer
       mplayer_options += " -vo #{options[:vo]}" if options[:vo]
       mplayer_options += " -prefer-ipv#{options[:preferred_ip]}" if options[:preferred_ip]
       mplayer_options += " -cache #{options[:cache]}" if options[:cache]
-      mplayer = "#{options[:path]} #{mplayer_options} #{@file}"
-      
+      mplayer = "#{options[:path]} #{mplayer_options} '#{@file}'"
       @pid,@stdin,@stdout,@stderr = Open4.popen4(mplayer)
       
       until @stdout.gets.inspect =~ /MPlayer/ do #/playback/ do
