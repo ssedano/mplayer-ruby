@@ -10,15 +10,14 @@ module MPlayer
 
     # Initializes a new instance of MPlayer.
     # set :path to point to the location of mplayer
-    # defaults to '/usr/bin/mplayer'
+    # defaults to what executable returns which mplayer. If you want to override this to use a custom version then you must provide the executable.
     # singleton makes the mplayer idles and ignore console data.
     # :vo lets the user choose which video output driver must mplayer load. 'null' for no video at al.
     # :preferred_id can take 4 or 6.
     # :cache for the video
     def initialize(file = "",options ={})
-      options[:path] ||= '/usr/bin/mplayer'
+      options[:path] ||= %x[which mplayer].chomp! 
       @file = file
-
       mplayer_options = "-slave -quiet"
       mplayer_options += " -vf screenshot" if options[:screenshot]
       mplayer_options += " -idle -noconsolecontrols" if options[:singleton]
@@ -28,8 +27,6 @@ module MPlayer
       mplayer = "#{options[:path]} #{mplayer_options} '#{@file}'"
       @pid,@stdin,@stdout,@stderr = Open4.popen4(mplayer)
       
-      until @stdout.gets.inspect =~ /MPlayer/ do #/playback/ do
-      end #fast forward past mplayer's initial output
     end
 
     # commands command to mplayer stdin and retrieves stdout.
